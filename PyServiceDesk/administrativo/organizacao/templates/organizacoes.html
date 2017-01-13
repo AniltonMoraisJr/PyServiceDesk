@@ -1,0 +1,87 @@
+{% extends 'administrativo.html' %}
+{% block content %}
+	<section class="content-header">
+		<h1>Organizações</h1>
+		<small>Todos as organizações cadastradas</small>
+		<ol class="breadcrumb">
+        	<li><a href="{% url 'administrativo:manager' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        	<li class="active"><a href="{% url 'administrativo:organizacao:organization' %}"><i class="fa fa-th"></i>Organizações</a></li>
+      	</ol>
+	</section>
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Busca</h3>
+						<div class="box-tools pull-right">
+			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+			                </button>
+			             </div>
+					</div>
+					<div class="box-body">
+						<form method="POST" url="{% url 'administrativo:organizacao:organization' %}">
+							<div class="form-group">
+								{% csrf_token %}
+								<label>Nome</label>
+								<input type="text" name="nome">
+								<label>Código</label>
+								<input type="text" name="code">
+								<label>Status</label>
+								<select name="status">
+									<option value="A">Ativo</option>
+									<option value="I">Inativo</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="submit" class="btn btn-default pull-right" value="Buscar"/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<a href="{% url 'administrativo:organizacao:new_organization' %}" class="btn btn-primary pull-right"> Nova Organização</a>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Lista de organizações</h3>
+					</div>
+					{% if organization_list %}
+					<div class="box-body table-responsive no-padding">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Status</th>
+									<th>Matriz</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for org in organization_list %}
+									<tr>
+										<td>
+											<a href="{% url 'administrativo:organizacao:detail_organization' pk=org.pk %}">
+												{{org.nome}}
+											</a>
+										</td>
+										<td>{{org.status}}</td>
+										<td>{{org.parent_id.nome}}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					{% else %}
+					<p>Nenhuma organização cadastrada</p>
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
