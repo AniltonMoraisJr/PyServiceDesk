@@ -1,0 +1,28 @@
+{% extends 'administrativo.html' %}
+{% block content %}
+	<section class="content-header">
+		<h1>Editando Familia de Serviço</h1>
+		<ol class="breadcrumb">
+        	<li><a href="{% url 'administrativo:manager' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        	<li><a href="{% url 'administrativo:familiaservico:familyservice' %}"><i class="fa fa-th"></i>Familia de Serviço</a></li>
+        	<li class="active">Editando</li>
+      	</ol>
+	</section>
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+					</div>
+					<div class="box-body">
+						<form role="form" method="POST" action="{% url 'administrativo:familiaservico:edit_familyservice' pk=pk %}">
+							{% csrf_token %}
+							{{ form.as_p }}
+							<input type="submit" name="" value="Salvar" class="btn btn-success pull-right">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

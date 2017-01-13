@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'PyServiceDesk.web',
     'PyServiceDesk.administrativo',
-    'PyServiceDesk.administrativo.organizacao'
+    'PyServiceDesk.administrativo.organizacao',
+    'PyServiceDesk.administrativo.familiaservico'
 ]
 
 MIDDLEWARE = [

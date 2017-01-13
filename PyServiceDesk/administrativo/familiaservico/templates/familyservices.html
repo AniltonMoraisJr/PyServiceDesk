@@ -1,0 +1,89 @@
+{% extends 'administrativo.html' %}
+{% block content %}
+	<section class="content-header">
+		<h1>Familias de Serviço</h1>
+		<small>Todos as familias de serviço cadastradas</small>
+		<ol class="breadcrumb">
+        	<li><a href="{% url 'administrativo:manager' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        	<li class="active"><a href="{% url 'administrativo:familiaservico:familyservice' %}"><i class="fa fa-th"></i>Familias de Serviço</a></li>
+      	</ol>
+	</section>
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header with-border">
+						<h3 class="box-title">Busca</h3>
+						<div class="box-tools pull-right">
+			                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+			                </button>
+			             </div>
+					</div>
+					<div class="box-body">
+						<form method="POST" url="{% url 'administrativo:familiaservico:familyservice' %}">
+							<div class="form-group">
+								{% csrf_token %}
+								<label>Nome</label>
+								<input type="text" name="name">
+								<label>Descrição</label>
+								<input type="text" name="description">
+								<label>Status</label>
+								<select name="status">
+									<option value="">Todos</option>
+									<option value="P">Produção</option>
+									<option value="I">Implementação</option>
+									<option value="O">Obsoleto</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="submit" class="btn btn-default pull-right" value="Buscar"/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<a href="{% url 'administrativo:familiaservico:new_familyservice' %}" class="btn btn-primary pull-right"> Nova Familia de Serviço</a>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Lista de Familias de Serviço</h3>
+					</div>
+					{% if familyservice_list %}
+					<div class="box-body table-responsive no-padding">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Status</th>
+									<th>Organização</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for family in familyservice_list %}
+									<tr>
+										<td>
+											<a href="{% url 'administrativo:familiaservico:detail_familyservice' pk=family.pk %}">
+												{{family.nome}}
+											</a>
+										</td>
+										<td>{{family.status}}</td>
+										<td>{{family.org_id.nome}}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					{% else %}
+					<p>Nenhuma organização cadastrada</p>
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

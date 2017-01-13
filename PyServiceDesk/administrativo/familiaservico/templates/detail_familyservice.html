@@ -1,0 +1,75 @@
+{% extends 'administrativo.html' %}
+{% block content %}
+	<section class="content-header">
+		<h1>Detail: {{ familyservice.nome }}</h1>
+		<ol class="breadcrumb">
+        	<li><a href="{% url 'administrativo:manager' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        	<li><a href="{% url 'administrativo:familiaservico:familyservice' %}"><i class="fa fa-th"></i>Organizações</a></li>
+        	<li class="active">Detail</li>
+      	</ol>
+	</section>
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs">
+						<li class="pull-left header">
+							<i class="fa fa-th"></i>
+							{{ familyservice.nome }}
+						</li>
+						<li class="active">
+							<a href="#tab_1-1" data-toggle="tab" aria-expanded="true">Detail</a>
+						</li>
+						<li class="">
+							<a href="#tab_2-2" data-toggle="tab" aria-expanded="false">Serviços</a>
+						</li>
+						<li class="dropdown">
+			                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+			                  Outras Opções <span class="caret"></span>
+			                </a>
+			                <ul class="dropdown-menu">
+			                  <li role="presentation">
+			                  	<a role="menuitem" tabindex="-1" href="{% url 'administrativo:familiaservico:edit_familyservice' pk=familyservice.pk %}">Edit</a>
+			                  </li>
+			                </ul>
+			            </li>
+					</ul>
+					<div class="tab-content">
+						<div id="tab_1-1" class="tab-pane active">
+							<p><strong>Name:</strong> {{familyservice.nome}}</p>
+							<p><strong>Descrição:</strong> {{familyservice.descricao}}</p>
+							<p><strong>Status:</strong> {{familyservice.status}}</p>
+							<p><strong>Organização:</strong> {{familyservice.org_id.nome}}</p>
+						</div>
+						<div id="tab_2-2" class="tab-pane">
+							<h3>Link of organizations releated</h3>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Nome</th>
+										<th>Status</th>
+										<th>Matriz</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for org in organization.organization_set.all%}
+										<tr>
+											<td>
+												<a href="{% url 'administrativo:organizacao:detail_organization' pk=org.pk %}">
+													{{org.nome}}
+												</a>
+											</td>
+											<td>{{org.status}}</td>
+											<td>{{org.parent_id.nome}}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
